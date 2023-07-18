@@ -30,9 +30,24 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Recipe } = sequelize.models;
+const { Recipe, Diets } = sequelize.models;
 
 // Aca vendrian las relaciones
+
+//Recipe.belongsToMany(Recipe, { through: 'RecipeDiets' });
+//Actor.belongsToMany(Diets, { through: 'RecipeDiets' });
+Recipe.belongsToMany(Diets, { through: 'RecipeDiets', as: 'diets', foreignKey: 'recipeId' });
+Diets.belongsToMany(Recipe, { through: 'RecipeDiets', as: 'recipes', foreignKey: 'dietId' });
+/* 
+//Recipe.belongsToMany(Recipe, { through: 'RecipeDiets' });
+//Actor.belongsToMany(Diets, { through: 'RecipeDiets' });
+El error que estás enfrentando ocurre debido a una asociación many-to-many autoreferencial 
+(cuando un modelo se asocia con sí mismo en una relación muchos a muchos). Sequelize requiere 
+que especifiques el alias para la relación en este caso.
+
+Para corregir el error, debes proporcionar un alias ('as') cuando configuras la asociación 
+many-to-many. Aquí está la corrección:
+*/
 // Product.hasMany(Reviews);
 
 module.exports = {
