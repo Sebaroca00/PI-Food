@@ -1,36 +1,43 @@
+const { createRecipe, 
+        getRecipeById, 
+        searchRecipeByName, 
+        getAllRecipes 
+    } = require("../controllers/recipeControllers")
 
-
-const getRecipesHandler = ( req, res) => {
+const getRecipesHandler = async ( req, res) => {
     const { name } = req.query;
-    if(name !== undefined) {
-        res.send(`${name}`)
-    } else {
-        res.send("otra cosa")
+
+    const results = name ? await searchRecipeByName(name) : await getAllRecipes();
+
+    res.status(200).json(results);
+};
+
+const getRecipesIdHandler = async ( req, res) => {
+    const {id} = req.params
+
+    const source = isNaN(id) ? "bdd" : "api"
+    
+    try{
+        const recipe = await getRecipeById(id, source);
+        res.status(200).json(recipe);
+    } catch (error){
+        res.status(400).json({ error:error.message})
     }
 };
-
-const getRecipesIdHandler = ( req, res) => {
-    const {id} = req.params
-    res.send(`${id}`)
-};
    
-const postRecipesHandler = async (req,res,next) => {
-    let {
-        title,
-        summary,
-        spoonacularScore,
-        healthScore,
-        analyzedInstructions,
-        createdInDb,
-        typeDiets
-    } = req.body;
-    if(!title || !summary) {
-        return res.status(400).send('Please, insert a title and a summary to continue!');
-    }}
+const createRecipesHandler = async (req,res) => {
+    try {
+    const{ name, imagen, resumen, spoonacularScore, healthScore, pasoApaso } = req.body;
+   const newRecipe = await createRecipe(name, imagen, resumen, spoonacularScore, healthScore, pasoApaso);
+    res.status(201).json(newRecipe)
+} catch (error) {
+    res.status(400).json({ error: error.message});
+    };
+};
    
 module.exports = {
     getRecipesHandler,
     getRecipesIdHandler,
-    postRecipesHandler 
+    createRecipesHandler 
 
 }
