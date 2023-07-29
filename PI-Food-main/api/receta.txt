@@ -1,0 +1,8 @@
+{
+  "name": "Delicious Pasta Carbonara",
+  "imagen": "https://example.com/images/pasta_carbonara.jpg",
+  "resumen": "A classic Italian pasta dish made with eggs, cheese, bacon, and black pepper.",
+  "spoonacularScore": 85,
+  "healthScore": 95,
+  "pasoApaso": "1. Boil water and cook pasta until al dente.\n2. While the pasta cooks, whisk together eggs, grated cheese, and black pepper.\n3. In a separate pan, cook bacon until crispy.\n4. Drain the pasta and add it to the pan with the bacon, tossing to coat.\n5. Turn off the heat and quickly add the egg mixture, stirring continuously to create a creamy sauce.\n6. Serve immediately with additional grated cheese and black pepper on top."
+}
