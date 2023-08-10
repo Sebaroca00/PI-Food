@@ -3,7 +3,7 @@ const axios = require("axios");
 
 const fetchDietsFromAPI = async () => {
   try {
-    const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${api_key}&number=40&addRecipeInformation=true`);
+    const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${api_key}&number=100&addRecipeInformation=true`);
     const dietsFromAPI = response.data.results.map((recipe) => recipe.diets.map((dietName) => dietName.toLowerCase()));
     
     const allDiets = dietsFromAPI.reduce((diets, recipeDiets) => {

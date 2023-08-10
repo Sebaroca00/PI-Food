@@ -1,7 +1,30 @@
-.cardContainer{
-    border: 1px solid green;
-    width: fit-content;
-    height: fit-content;
-    border-radius: 10px;
-    
-}
+.cardContainer {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin: 16px;
+    text-align: center;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  
+  .cardContainer:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .cardImage {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+  
+  .cardLink {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  /* Add more styles as needed */
+  
+  

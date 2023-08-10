@@ -12,13 +12,13 @@ const cleanArray = (arr, source) => {
 
       return {
         id: elem.id,
-        nombre: elem.title,
-        name: elem.name,
+        name: elem.title,
+       // name: elem.name,
         imagen: elem.image,
         nivelDeComidaSaludable: elem.healthScore,
         resumenDelPlato: elem.summary,
         pasoApaso: steps,
-        dietas: elem.diets?.map((diet) => diet) || [],
+        tipoDeDietas: elem.diets?.map((diet) => diet) || [],
         created: false
       };
     });
@@ -27,8 +27,8 @@ const cleanArray = (arr, source) => {
     // Procesar datos de la base de datos
     return arr.map((elem) => ({
       id: elem.id,
-      nombre: elem.name,
-      dietas: elem.diets?.map((diet) => diet) || [],
+      name: elem.name,
+      tipoDeDietas: elem.diets?.map((diet) => diet) || [],
       created: elem.created
     }));
   }
@@ -38,39 +38,42 @@ const cleanArray = (arr, source) => {
 
 const createRecipe = async (req, res) => {
   try {
-    const { name, imagen, resumen, spoonacularScore, healthScore, pasoApaso, dieta } = req.body;
+    const { name, imagen, resumenDelPlato, nivelDeComidaSaludable, pasoApaso, tipoDeDietas } = req.body;
 
-    // Verificar si se proporcionaron los campos obligatorios
-    if (!name || !resumen || !dieta || dieta.length === 0) {
-      return res.status(400).json({ error: "Please provide name, resumen, and at least one dieta for the recipe." });
-    }
+    "name:", name
+    "imagen:", imagen
+    "resumenDelPlato:", resumenDelPlato
+    "nivelDeComidaSaludable:", nivelDeComidaSaludable
+    "pasoApaso:", pasoApaso
+    "tipoDeDietas:", tipoDeDietas
 
-    // Crear la receta en la base de datos
+    // Resto del código...
     const recipe = await Recipe.create({
       name,
       imagen,
-      resumen,
-      spoonacularScore,
-      healthScore,
+      resumenDelPlato,
+      nivelDeComidaSaludable,
       pasoApaso,
     });
 
-    // Obtener las dietas asociadas a través de sus nombres
+    // Obtener las dietas asociadas a través de sus names
     const diets = await Diets.findAll({
       where: {
-        name: dieta,
+        name: tipoDeDietas,
       },
     });
 
     // Asociar las dietas con la receta a través de la tabla intermedia RecipeDiets
-    await recipe.setDiets(diets);
+   // await recipe.setDiets(diets);
 
     res.status(201).json(recipe);
   } catch (error) {
     console.error("Error creating recipe:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: "aca" });
   }
 };
+
+
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -119,7 +122,7 @@ const getAllRecipes = async () => {
 
   const apiRecipes = cleanArray(apiRecipesRaw.results , "api");
 
-  // Búsqueda de recetas en la base de datos por nombre (insensible a mayúsculas y minúsculas)
+  // Búsqueda de recetas en la base de datos por name (insensible a mayúsculas y minúsculas)
   const dbRecipes = await Recipe.findAll({
     where: {
       name: { [Op.iLike]: `%${name}%` }
@@ -131,7 +134,7 @@ const getAllRecipes = async () => {
 
   if (recipes.length === 0) {
     // No se encontraron recetas
-    return { message: 'No se encontraron recetas con el nombre proporcionado.' };
+    return { message: 'No se encontraron recetas con el name proporcionado.' };
   }
 
   return recipes;

@@ -21,5 +21,17 @@ const createDietsHandler = async (req, res) => {
   }
 };
 
-module.exports = { createDietsHandler };
+
+
+const dietsHandler = async (req, res) => {
+  try {
+    const diets = await Diets.findAll(); // Obtener todas las dietas de la base de datos
+    res.json(diets);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener las dietas', error: error.message });
+  }
+};
+
+
+module.exports = { createDietsHandler, dietsHandler };
 

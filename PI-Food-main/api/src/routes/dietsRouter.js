@@ -1,7 +1,9 @@
 const { Router } = require('express');
-const { createDietsHandler } = require('../controllers/dietsControllers');
+const { createDietsHandler, dietsHandler } = require('../controllers/dietsControllers');
 
 const dietsRouter = Router();
+
+dietsRouter.get('/', dietsHandler);
 
 dietsRouter.post('/', createDietsHandler);
 

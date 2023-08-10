@@ -1,6 +1,5 @@
 .mainContainer{
     display: flex;
-    align-items: flex-start;
-    background-color: blue;
-    color: white;
+    background-color: rgb(243, 243, 243);
+    color: rgb(5, 5, 5);
 }
