@@ -1,33 +1,37 @@
 import React from "react";
-import { useParams } from "react-router-dom"; // Importa useParams para obtener los parámetros de la URL
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import style from "./Detail.module.css";
 
 const Detail = () => {
-  const { name } = useParams(); // Obtén el ID de la receta de los parámetros de la URL
+  const { title } = useParams();
   const recipes = useSelector((state) => state.recipes);
 
-  // Busca la receta específica por ID
-  const recipe = recipes.find((r) => r.name === name);
+  const recipe = recipes.find((r) => r.title === title);
 
   if (!recipe) {
     return <div>No se encontró la receta.</div>;
   }
 
+  const renderHTML = (rawHTML) => {
+    return <div dangerouslySetInnerHTML={{ __html: rawHTML }} />;
+  };
+
   return (
-    <div>
-      <h2>DETAIL PAGE</h2>
+    <div className={style.detailContainer}>
+      <h2 className={style.detailTitle}>DETAIL PAGE</h2>
       <p>ID: {recipe.id}</p>
       <p>Nombre: {recipe.name}</p>
-      <p>Resumen del plato: {recipe.resumenDelPlato}</p>
-      <p>Nivel de comida saludable: {recipe.nivelDeComidaSaludable}</p>
-      <p>Paso a paso:</p>
-      <ul>
+      <p className={style.detailInfo}>Resumen del plato: {renderHTML(recipe.resumenDelPlato)}</p>
+      <p className={style.detailInfo}>Nivel de comida saludable: {recipe.nivelDeComidaSaludable}</p>
+      <p className={style.detailInfo}>Paso a paso:</p>
+      <ul className={style.detailSteps}>
         {recipe.pasoApaso.map((step, index) => (
           <li key={index}>{step}</li>
         ))}
       </ul>
-      <img src={recipe.image} alt={recipe.name} />
-      <p>Tipos de dieta: {recipe.tipoDeDietas.join(", ")}</p>
+      <img src={recipe.image} alt={recipe.name} className={style.detailImage} />
+      <p className={style.detailDiets}>Tipos de dieta: {recipe.diets.join(", ")}</p>
     </div>
   );
 };

@@ -37,15 +37,27 @@ export const filterBySource = () => {
 
 
 export const getRecipesByName = (name) => {
-    
-    return async function(dispatch){
-        var json = await axios.get(`http://localhost:3001/recipe/?name=${name}`);
-    return dispatch( {
-        type : GET_BY_NAME,
-        payload: json.data
-    })
-}
-}
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`http://localhost:3001/recipe/?name=${name}`);
+      const data = response.data; // Supongamos que los resultados están en la propiedad 'data'
+      
+      // Devolver una acción con la estructura adecuada
+      return dispatch({
+        type: GET_BY_NAME,
+        payload: data.results, // Asegúrate de ajustar esto según la estructura de tu respuesta
+      });
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+      // Manejar el error devolviendo una acción con un array vacío
+      return dispatch({
+        type: GET_BY_NAME,
+        payload: [], // Devolver un array vacío en caso de error
+      });
+    }
+  };
+};
+
 
 
 export const setDiets = (diets) => ({

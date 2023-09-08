@@ -9,6 +9,38 @@ const { Op } = require("sequelize");
 require('dotenv').config();
 const { api_key } = process.env;
 
+///////////////////////////////////////////////////
+const cleanArray = (arr, source) => {
+  if (source === "api") {
+    // Procesar datos de la API
+    return arr.map((elem) => {
+      const steps = elem.analyzedInstructions?.[0]?.steps?.map((step) => step.step) || [];
+
+      return {
+        id: elem.id,
+        name: elem.title,
+       // name: elem.name,
+        image: elem.image,
+        nivelDeComidaSaludable: elem.healthScore,
+        resumenDelPlato: elem.summary,
+        pasoApaso: steps,
+        diets: elem.diets?.map((diet) => diet) || [],
+        created: false
+      };
+    });
+
+  } else {
+    // Procesar datos de la base de datos
+    return arr.map((elem) => ({
+      id: elem.id,
+      name: elem.name,
+      diets: elem.diets?.map((diet) => diet) || [],
+      created: elem.created
+    }));
+  }
+};
+////////////////////////////////////////////////
+
 const getRecipesHandler = async (req, res) => {
     const { name } = req.query;
   
@@ -23,14 +55,14 @@ const getRecipesHandler = async (req, res) => {
           },
           include: {
             model: Diets,
-            as: 'diets' // Reemplaza 'tipoDeDietas' con el alias correcto que hayas definido en el modelo
+            as: 'diets' 
           }
         });
       } else {
         dbRecipes = await Recipe.findAll({
           include: {
             model: Diets,
-            as: 'diets' // Reemplaza 'tipoDeDietas' con el alias correcto que hayas definido en el modelo
+            as: 'diets' 
           }
         });
       }
@@ -41,7 +73,7 @@ const getRecipesHandler = async (req, res) => {
         )
         ).data;
         
-        apiRecipes = response.results;
+        apiRecipes = cleanArray(response.results, "api");
       } catch (error) {
         console.error("Error al obtener recetas de la API externa:", error);
       }

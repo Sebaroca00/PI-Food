@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { GET_RECIPES, SET_DIETS } from './actions';
+import { GET_RECIPES, SET_DIETS, GET_BY_NAME } from './actions';
 
 const initialState = {
   recipes: [],
@@ -10,6 +10,9 @@ const recipesReducer = (state = initialState.recipes, action) => {
   switch (action.type) {
     case GET_RECIPES:
       return action.payload;
+    case GET_BY_NAME:
+      // Si la acción GET_BY_NAME no debe afectar el estado, simplemente retorna el estado anterior
+      return state;
     default:
       return state;
   }

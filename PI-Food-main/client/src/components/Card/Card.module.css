@@ -24,7 +24,12 @@
     color: #333;
     font-weight: bold;
   }
-  
-  /* Add more styles as needed */
-  
+  .cardImage {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Agregar sombra difuminada */
+    object-fit: cover; /* Ajustar imagen manteniendo la relación de aspecto */
+    margin: 0 auto; /* Centrar la imagen horizontalmente */
+  }
   

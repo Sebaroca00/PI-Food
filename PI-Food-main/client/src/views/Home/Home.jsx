@@ -32,9 +32,10 @@ const Home = () => {
         <p>{searchError}</p>
       ) : (
         <CardsContainer
-        recipes={searchResults.length > 0 ? searchResults : recipes}
-        diets={diets} // Pasa las dietas al componente CardsContainer
-      />
+          recipes={searchResults.length > 0 ? searchResults : recipes}
+          diets={diets}
+          searchError={searchError} // Pasar el estado de error a CardsContainer
+        />
       )}
     </>
   );

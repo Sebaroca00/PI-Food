@@ -4,7 +4,7 @@ const { Op } = require("sequelize");
 require('dotenv').config();
 const { api_key } = process.env;
 
-const cleanArray = (arr, source) => {
+/*const cleanArray = (arr, source) => {
   if (source === "api") {
     // Procesar datos de la API
     return arr.map((elem) => {
@@ -14,7 +14,7 @@ const cleanArray = (arr, source) => {
         id: elem.id,
         name: elem.title,
        // name: elem.name,
-        imagen: elem.image,
+        image: elem.image,
         nivelDeComidaSaludable: elem.healthScore,
         resumenDelPlato: elem.summary,
         pasoApaso: steps,
@@ -32,7 +32,7 @@ const cleanArray = (arr, source) => {
       created: elem.created
     }));
   }
-};
+};*/
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -47,7 +47,6 @@ const createRecipe = async (req, res) => {
     "pasoApaso:", pasoApaso
     "tipoDeDietas:", tipoDeDietas
 
-    // Resto del código...
     const recipe = await Recipe.create({
       name,
       imagen,

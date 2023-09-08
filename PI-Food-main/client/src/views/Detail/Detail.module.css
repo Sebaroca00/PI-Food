@@ -1,0 +1,42 @@
+
+
+.detailContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .detailTitle {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  .detailInfo {
+    margin-bottom: 16px;
+  }
+  
+  .detailImage {
+    max-width: 100%;
+    height: auto;
+    padding-left: 250px;
+    border-radius: 8px;
+    margin-top: 16px;
+  }
+  
+  .detailSteps {
+    margin-top: 16px;
+  }
+  
+  .detailSteps li {
+    margin-bottom: 8px;
+  }
+  
+  .detailDiets {
+    margin-top: 16px;
+    font-weight: bold;
+  }
+
+  
